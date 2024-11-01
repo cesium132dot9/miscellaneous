@@ -30,17 +30,13 @@ def turn(row: int, column: int, player: int, board: list[list[int]]) -> bool:
 
 
 def win_condition(board: list[list[int]]) -> bool:
-    # checking 3 in a row
     for i in range(3):
         if board[i][0] == board[i][1] == board[i][2] == 1 or \
-            board[i][0] == board[i][1] == board[i][2] == 2: 
+            board[i][0] == board[i][1] == board[i][2] == 2:  # checking if there are 3 in a row 
             return True
-    
-    # checking 3 in a column
-    for i in range(3):
         if board[0][i] == board[1][i] == board[2][i] == 1 or \
-            board[0][i] == board[1][i] == board[2][i] == 2:
-            return True
+            board[0][i] == board[1][i] == board[2][i] == 2:  # checking if there are 3 in a column 
+            return True 
 
     # checking diagonals
     # checking top left to bottom right 
@@ -52,16 +48,17 @@ def win_condition(board: list[list[int]]) -> bool:
         board[0][2] == board[1][1] == board[2][0] == 2: 
         return True
     
+    return False
+    
+
+turn_so_far = 0
 
 while run_game: 
-    turn_so_far = 0
     move_validity = False
 
     if turn_so_far == 0: 
-        if player1_name == '': 
-            player1_name = input("Please enter your name, player 1: ").upper()
-        if player2_name == '':
-            player2_name = input("Please enter your name, player 2: ").upper()
+        player1_name = input("Please enter your name, player 1: ").upper()
+        player2_name = input("Please enter your name, player 2: ").upper()
         turn_so_far += 1
 
     while not move_validity: 
@@ -84,6 +81,10 @@ while run_game:
         else: 
             print(f"CONGRATS {player2_name} YOU WIN!!!!")
             run_game = False
+
+    if turn_so_far == 9 and not win_condition(board): 
+        print(f"AWWWWWWW shucks, {player1_name} and {player2_name} you guys drew")
+        run_game = False
     
     turn_so_far += 1
     if player == 1: 
